@@ -1,0 +1,12 @@
+{
+    "require": {
+        "symfony/asset": "4.4",
+        "symfony/website-skeleton": "^5.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5",
+        "escapestudios/symfony2-coding-standard": "^3.11",
+        "jms/serializer": "1.7.*",
+        "phpdocumentor/phpdocumentor": "2.9"
+    }
+}
