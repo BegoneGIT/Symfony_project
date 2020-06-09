@@ -6,7 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Wallet;
-//use App\Form\WalletType;
+use App\Form\WalletType;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -97,9 +97,8 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /*$wallet->setCreatedAt(new \DateTime());
-            $wallet->setUpdatedAt(new \DateTime());
-            */
+            $wallet->setCreatedAt(new \DateTime());
+
             $walletRepository->save($wallet);
 
             $this->addFlash('success', 'message_created_successfully');
@@ -138,7 +137,6 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$wallet->setUpdatedAt(new \DateTime());
             $walletRepository->save($wallet);
 
             $this->addFlash('success', 'message_updated_successfully');
@@ -176,12 +174,6 @@ class WalletController extends AbstractController
      */
     public function delete(Request $request, Wallet $wallet, WalletRepository $repository): Response
     {
-        if ($wallet->getTasks()->count()) {
-            $this->addFlash('warning', 'message_wallet_contains_tasks');
-
-            return $this->redirectToRoute('wallet_index');
-        }
-
         $form = $this->createForm(FormType::class, $wallet, ['method' => 'DELETE']);
         $form->handleRequest($request);
 

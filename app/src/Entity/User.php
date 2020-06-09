@@ -89,9 +89,15 @@ class User implements UserInterface
      */
     private $wallets;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Label::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $labels;
+
     public function __construct()
     {
         $this->wallets = new ArrayCollection();
+        $this->labels = new ArrayCollection();
     }
 
     /**
@@ -232,6 +238,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($wallet->getAuthor() === $this) {
                 $wallet->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Label[]
+     */
+    public function getLabels(): Collection
+    {
+        return $this->labels;
+    }
+
+    public function addLabel(Label $label): self
+    {
+        if (!$this->labels->contains($label)) {
+            $this->labels[] = $label;
+            $label->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLabel(Label $label): self
+    {
+        if ($this->labels->contains($label)) {
+            $this->labels->removeElement($label);
+            // set the owning side to null (unless already changed)
+            if ($label->getAuthor() === $this) {
+                $label->setAuthor(null);
             }
         }
 

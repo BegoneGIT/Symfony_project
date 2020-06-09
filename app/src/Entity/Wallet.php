@@ -4,11 +4,8 @@ namespace App\Entity;
 
 use App\Repository\WalletRepository;
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -34,7 +31,7 @@ class Wallet
     private $transaction;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $amount;
 
@@ -58,6 +55,11 @@ class Wallet
     private $author;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Label::class, inversedBy="wallet")
+     */
+    private $label;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Result
@@ -69,8 +71,6 @@ class Wallet
 
     /**
      * Getter for paymentType.
-     *
-     * @return string|null
      */
     public function getPaymentType(): ?string
     {
@@ -80,7 +80,6 @@ class Wallet
     /**
      * Setter for paymentType.
      *
-     * @param string $paymentType
      * @return $this
      */
     public function setPaymentType(string $paymentType): self
@@ -91,9 +90,7 @@ class Wallet
     }
 
     /**
-     * Getter for Transaction
-     *
-     * @return string|null
+     * Getter for Transaction.
      */
     public function getTransaction(): ?string
     {
@@ -114,8 +111,6 @@ class Wallet
 
     /**
      * Getter for Amount.
-     *
-     * @return string|null
      */
     public function getAmount(): ?string
     {
@@ -174,6 +169,18 @@ class Wallet
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getLabel(): ?Label
+    {
+        return $this->label;
+    }
+
+    public function setLabel(?Label $label): self
+    {
+        $this->label = $label;
 
         return $this;
     }
