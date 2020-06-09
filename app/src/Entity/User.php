@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -81,6 +83,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Wallet::class, mappedBy="author")
+     */
+    private $wallets;
+
+    public function __construct()
+    {
+        $this->wallets = new ArrayCollection();
+    }
 
     /**
      * Getter for the Id.
@@ -193,5 +205,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Wallet[]
+     */
+    public function getWallets(): Collection
+    {
+        return $this->wallets;
+    }
+
+    public function addWallet(Wallet $wallet): self
+    {
+        if (!$this->wallets->contains($wallet)) {
+            $this->wallets[] = $wallet;
+            $wallet->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWallet(Wallet $wallet): self
+    {
+        if ($this->wallets->contains($wallet)) {
+            $this->wallets->removeElement($wallet);
+            // set the owning side to null (unless already changed)
+            if ($wallet->getAuthor() === $this) {
+                $wallet->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

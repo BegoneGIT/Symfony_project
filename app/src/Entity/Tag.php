@@ -41,7 +41,7 @@ class Tag
      *
      * @ORM\Column(type="datetime")
      *
-     * @Assert\DateTime
+     * @Assert\Type("\DateTimeInterface")
      *
      * @Gedmo\Timestampable(on="create")
      */
@@ -54,7 +54,7 @@ class Tag
      *
      * @ORM\Column(type="datetime")
      *
-     * @Assert\DateTime
+     * @Assert\Type("\DateTimeInterface")
      *
      * @Gedmo\Timestampable(on="update")
      */
