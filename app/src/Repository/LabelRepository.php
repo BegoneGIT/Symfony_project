@@ -1,12 +1,18 @@
 <?php
+/**
+ * Label repository.
+ */
 
 namespace App\Repository;
 
 use App\Entity\Label;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
+ * Class LabelRepository.
+ *
  * @method Label|null find($id, $lockMode = null, $lockVersion = null)
  * @method Label|null findOneBy(array $criteria, array $orderBy = null)
  * @method Label[]    findAll()
@@ -14,37 +20,75 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LabelRepository extends ServiceEntityRepository
 {
+    /**
+     * Items per page.
+     *
+     * Use constants to define configuration options that rarely change instead
+     * of specifying them in app/config/config.yml.
+     * See https://symfony.com/doc/current/best_practices.html#configuration
+     *
+     * @constant int
+     */
+    const PAGINATOR_ITEMS_PER_PAGE = 10;
+
+    /**
+     * LabelRepository constructor.
+     *
+     * @param \Doctrine\Common\Persistence\ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Label::class);
     }
 
-    // /**
-    //  * @return Label[] Returns an array of Label objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Save record.
+     *
+     * @param \App\Entity\Label $label Label entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Label $label): void
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->_em->persist($label);
+        $this->_em->flush($label);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Label
+    /**
+     * Delete record.
+     *
+     * @param \App\Entity\Label $label Label entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Label $label): void
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->_em->remove($label);
+        $this->_em->flush($label);
     }
-    */
+
+    /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    public function queryAll(): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->orderBy('label.name', 'DESC');
+    }
+
+    /**
+     * Get or create new query builder.
+     *
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?? $this->createQueryBuilder('label');
+    }
 }

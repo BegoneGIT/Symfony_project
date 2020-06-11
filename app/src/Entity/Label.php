@@ -25,6 +25,9 @@ class Label
     private $name;
 
     /**
+     *
+     * @var \App\Entity\User
+     *
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="labels")
      * @ORM\JoinColumn(nullable=false)
      */
