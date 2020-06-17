@@ -6,7 +6,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Wallet;
-use App\Entity\Label;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -25,8 +24,8 @@ class WalletFixtures extends AbstractBaseFixtures implements DependentFixtureInt
         $this->createMany(10, 'wallets', function ($i) {
             $wallet = new Wallet();
             $wallet->setAmount($this->faker->randomFloat($nbMaxDecimals = 2));
-            $wallet->setPaymentType($this->faker->word);
-            $wallet->setTransaction($this->faker->word);
+            $wallet->setPaymentType($this->faker->boolean($chanceOfGettingTrue = 50)); //($this->faker->word);
+            $wallet->setTransaction($this->faker->boolean($chanceOfGettingTrue = 60)); //($this->faker->word);
             $wallet->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $wallet->setAuthor($this->getRandomReference('users'));
             $wallet->setLabel($this->getRandomReference('labels'));

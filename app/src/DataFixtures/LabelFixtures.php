@@ -22,7 +22,7 @@ class LabelFixtures extends AbstractBaseFixtures implements DependentFixtureInte
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(50, 'labels', function ($i) {
+        $this->createMany(10, 'labels', function ($i) {
             $label = new Label();
             $label->setName($this->faker->text($maxNbChars = 64));
             //$label->getWallet($this->getRandomReference('wallets'));

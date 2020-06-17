@@ -9,11 +9,13 @@ use App\Entity\Wallet;
 use App\Form\WalletType;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Controller\SecurityController;
 
 /**
  * Class WalletController.
@@ -40,7 +42,7 @@ class WalletController extends AbstractController
     public function index(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
-            $walletRepository->queryAll(),
+            $walletRepository->queryByAuthor($this->getUser()),
             $request->query->getInt('page', 1),
             WalletRepository::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -63,6 +65,10 @@ class WalletController extends AbstractController
      *     methods={"GET"},
      *     name="wallet_show",
      *     requirements={"id": "[1-9]\d*"},
+     * )
+     * @IsGranted(
+     *     "VIEW",
+     *     subject="wallet",
      * )
      */
     public function show(Wallet $wallet): Response
@@ -130,6 +136,11 @@ class WalletController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="wallet_edit",
      * )
+     *
+     * @IsGranted(
+     *     "EDIT",
+     *     subject="wallet",
+     *    )
      */
     public function edit(Request $request, Wallet $wallet, WalletRepository $walletRepository): Response
     {
@@ -171,6 +182,11 @@ class WalletController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="wallet_delete",
      * )
+     *
+     * @IsGranted(
+     *     "DELETE",
+     *     subject="wallet",
+     *     )
      */
     public function delete(Request $request, Wallet $wallet, WalletRepository $repository): Response
     {

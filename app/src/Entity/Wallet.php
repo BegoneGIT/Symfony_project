@@ -21,12 +21,12 @@ class Wallet
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="boolean")
      */
     private $paymentType;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="boolean")
      */
     private $transaction;
 
@@ -49,6 +49,8 @@ class Wallet
     private $createdAt;
 
     /**
+     * @var \App\Entity\User
+     *
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="wallets")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -72,7 +74,7 @@ class Wallet
     /**
      * Getter for paymentType.
      */
-    public function getPaymentType(): ?string
+    public function getPaymentType(): ?bool
     {
         return $this->paymentType;
     }
@@ -82,7 +84,7 @@ class Wallet
      *
      * @return $this
      */
-    public function setPaymentType(string $paymentType): self
+    public function setPaymentType(bool $paymentType): self
     {
         $this->paymentType = $paymentType;
 
@@ -92,7 +94,7 @@ class Wallet
     /**
      * Getter for Transaction.
      */
-    public function getTransaction(): ?string
+    public function getTransaction(): ?bool
     {
         return $this->transaction;
     }
@@ -102,7 +104,7 @@ class Wallet
      *
      * @return string|null
      */
-    public function setTransaction(string $transaction): self
+    public function setTransaction(bool $transaction): self
     {
         $this->transaction = $transaction;
 

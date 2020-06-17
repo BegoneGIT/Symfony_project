@@ -40,11 +40,6 @@ class TaskController extends AbstractController
      */
     public function index(Request $request, TaskRepository $taskRepository, PaginatorInterface $paginator): Response
     {
-        //$pagination = $paginator->paginate(
-        //$taskRepository->queryAll(),
-        //    $request->query->getInt('page', 1),
-        //    TaskRepository::PAGINATOR_ITEMS_PER_PAGE
-        //);
         $pagination = $paginator->paginate(
             $taskRepository->queryByAuthor($this->getUser()),
             $request->query->getInt('page', 1),
