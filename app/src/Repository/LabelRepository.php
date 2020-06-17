@@ -6,6 +6,7 @@
 namespace App\Repository;
 
 use App\Entity\Label;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
@@ -68,6 +69,24 @@ class LabelRepository extends ServiceEntityRepository
         $this->_em->remove($label);
         $this->_em->flush($label);
     }
+
+    /**
+     * Query label by author.
+     *
+     * @param \App\Entity\User $user User entity
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    public function queryByAuthor(User $user): QueryBuilder
+    {
+        $queryBuilder = $this->queryAll();
+
+        $queryBuilder->andWhere('label.author = :author')
+            ->setParameter('author', $user);
+
+        return $queryBuilder;
+    }
+
 
     /**
      * Query all records.

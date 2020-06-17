@@ -26,9 +26,9 @@ class LabelController extends AbstractController
     /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\LabelRepository            $labelRepository Label repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
+     * @param \Symfony\Component\HttpFoundation\Request $request         HTTP request
+     * @param \App\Repository\LabelRepository           $labelRepository Label repository
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator       Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -40,16 +40,16 @@ class LabelController extends AbstractController
      */
     public function index(Request $request, LabelRepository $labelRepository, PaginatorInterface $paginator): Response
     {
-        //$pagination = $paginator->paginate(
-        //$labelRepository->queryAll(),
-        //    $request->query->getInt('page', 1),
-        //    LabelRepository::PAGINATOR_ITEMS_PER_PAGE
-        //);
         $pagination = $paginator->paginate(
-            $labelRepository->queryAll(),
+        $labelRepository->queryByAuthor($this->getUser()),
             $request->query->getInt('page', 1),
             LabelRepository::PAGINATOR_ITEMS_PER_PAGE
         );
+//        $pagination = $paginator->paginate(
+//            $labelRepository->queryAll(),
+//            $request->query->getInt('page', 1),
+//            LabelRepository::PAGINATOR_ITEMS_PER_PAGE
+//        );
 
         return $this->render(
             'label/index.html.twig',
@@ -87,8 +87,8 @@ class LabelController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\LabelRepository            $labelRepository Label repository
+     * @param \Symfony\Component\HttpFoundation\Request $request         HTTP request
+     * @param \App\Repository\LabelRepository           $labelRepository Label repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -99,11 +99,6 @@ class LabelController extends AbstractController
      *     "/create",
      *     methods={"GET", "POST"},
      *     name="label_create",
-     * )
-     *
-     * @IsGranted(
-     *     "CREATE",
-     *     subject="label",
      * )
      */
     public function create(Request $request, LabelRepository $labelRepository): Response
@@ -129,9 +124,9 @@ class LabelController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Entity\Label                          $label           Label entity
-     * @param \App\Repository\LabelRepository            $labelRepository Label repository
+     * @param \Symfony\Component\HttpFoundation\Request $request         HTTP request
+     * @param \App\Entity\Label                         $label           Label entity
+     * @param \App\Repository\LabelRepository           $labelRepository Label repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -139,7 +134,7 @@ class LabelController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route(
-     *     "/{code}/edit",
+     *     "/{id}/edit",
      *     methods={"GET", "PUT"},
      *     requirements={"id": "[1-9]\d*"},
      *     name="label_edit",
@@ -174,9 +169,9 @@ class LabelController extends AbstractController
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Entity\Label                          $label           Label entity
-     * @param \App\Repository\LabelRepository            $labelRepository Label repository
+     * @param \Symfony\Component\HttpFoundation\Request $request         HTTP request
+     * @param \App\Entity\Label                         $label           Label entity
+     * @param \App\Repository\LabelRepository           $labelRepository Label repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -188,6 +183,11 @@ class LabelController extends AbstractController
      *     methods={"GET", "DELETE"},
      *     requirements={"id": "[1-9]\d*"},
      *     name="label_delete",
+     * )
+     *
+     * @IsGranted(
+     *     "DELETE",
+     *     subject="label",
      * )
      */
     public function delete(Request $request, Label $label, LabelRepository $labelRepository): Response
