@@ -5,6 +5,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\PaymentTypes;
+use App\Entity\TransactionTypes;
 use App\Entity\Wallet;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,11 +23,11 @@ class WalletFixtures extends AbstractBaseFixtures implements DependentFixtureInt
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(10, 'wallets', function ($i) {
+        $this->createMany(30, 'wallets', function ($i) {
             $wallet = new Wallet();
             $wallet->setAmount($this->faker->randomFloat($nbMaxDecimals = 2));
-            $wallet->setPaymentType($this->faker->boolean($chanceOfGettingTrue = 50)); //($this->faker->word);
-            $wallet->setTransaction($this->faker->boolean($chanceOfGettingTrue = 60)); //($this->faker->word);
+            $wallet->setPaymentType($this->getRandomReference('payment_types'));
+            $wallet->setTransactionType($this->getRandomReference('transaction_types'));
             $wallet->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $wallet->setAuthor($this->getRandomReference('users'));
             $wallet->setLabel($this->getRandomReference('labels'));
@@ -44,6 +46,6 @@ class WalletFixtures extends AbstractBaseFixtures implements DependentFixtureInt
      */
     public function getDependencies(): array
     {
-        return [LabelFixtures::class, UserFixtures::class];
+        return [LabelFixtures::class, UserFixtures::class, TransactionTypesFixtures::class, PaymentTypesFixtures::class];
     }
 }

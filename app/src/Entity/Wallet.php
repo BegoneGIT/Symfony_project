@@ -20,15 +20,7 @@ class Wallet
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $paymentType;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $transaction;
 
     /**
      * @ORM\Column(type="integer")
@@ -62,6 +54,18 @@ class Wallet
     private $label;
 
     /**
+     * @ORM\ManyToOne(targetEntity=PaymentTypes::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $paymentType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TransactionTypes::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $transactionType;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Result
@@ -71,45 +75,8 @@ class Wallet
         return $this->id;
     }
 
-    /**
-     * Getter for paymentType.
-     */
-    public function getPaymentType(): ?bool
-    {
-        return $this->paymentType;
-    }
 
-    /**
-     * Setter for paymentType.
-     *
-     * @return $this
-     */
-    public function setPaymentType(bool $paymentType): self
-    {
-        $this->paymentType = $paymentType;
 
-        return $this;
-    }
-
-    /**
-     * Getter for Transaction.
-     */
-    public function getTransaction(): ?bool
-    {
-        return $this->transaction;
-    }
-
-    /**
-     * Setter for Transaction.
-     *
-     * @return string|null
-     */
-    public function setTransaction(bool $transaction): self
-    {
-        $this->transaction = $transaction;
-
-        return $this;
-    }
 
     /**
      * Getter for Amount.
@@ -183,6 +150,30 @@ class Wallet
     public function setLabel(?Label $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?PaymentTypes
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(?PaymentTypes $paymentType): self
+    {
+        $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    public function getTransactionType(): ?TransactionTypes
+    {
+        return $this->transactionType;
+    }
+
+    public function setTransactionType(?TransactionTypes $transactionType): self
+    {
+        $this->transactionType = $transactionType;
 
         return $this;
     }

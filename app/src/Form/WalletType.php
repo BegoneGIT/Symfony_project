@@ -6,6 +6,8 @@
 namespace App\Form;
 
 use App\Entity\Label;
+use App\Entity\PaymentTypes;
+use App\Entity\TransactionTypes;
 use App\Entity\Wallet;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -49,21 +51,33 @@ class WalletType extends AbstractType
 
         $builder->add(
             'paymentType',
-            TextType::class,
+            EntityType::class,
             [
+                'class' => PaymentTypes::class,
+                'choice_label' => function ($payment) {
+                    return $payment->getCode();
+                },
                 'label' => 'label_payment',
+                'placeholder' => 'label_payment_type',
                 'required' => true,
-                'attr' => ['max_length' => 64],
+                'expanded' => true,
+                'multiple' => false,
             ]
         );
 
         $builder->add(
-            'transaction',
-            TextType::class,
+            'transactionType',
+            EntityType::class,
             [
+                'class' => TransactionTypes::class,
+                'choice_label' => function ($transaction) {
+                    return $transaction->getCode();
+                },
                 'label' => 'label_transaction',
+                'placeholder' => 'label_transaction_type',
                 'required' => true,
-                'attr' => ['max_length' => 64],
+                'expanded' => true,
+                'multiple' => false,
             ]
         );
 

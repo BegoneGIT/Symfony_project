@@ -70,6 +70,7 @@ class WalletRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
+
     /**
      * Get or create new query builder.
      *

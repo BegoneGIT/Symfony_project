@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Wallet;
 use App\Form\WalletType;
 use App\Repository\WalletRepository;
+use App\Service\WalletService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Controller\SecurityController;
 
 /**
  * Class WalletController.
@@ -24,6 +24,23 @@ use App\Controller\SecurityController;
  */
 class WalletController extends AbstractController
 {
+    /**
+     * Wallet service.
+     *
+     * @var \App\Service\WalletService
+     */
+    private $walletService;
+
+    /**
+     * WalletController constructor.
+     *
+     * @param \App\Service\WalletService $walletService Wallet service
+     */
+    public function __construct(WalletService $walletService)
+    {
+        $this->walletService = $walletService;
+    }
+
     /**
      * Index action.
      *
@@ -41,15 +58,18 @@ class WalletController extends AbstractController
      */
     public function index(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
     {
-        $pagination = $paginator->paginate(
-            $walletRepository->queryByAuthor($this->getUser()),
-            $request->query->getInt('page', 1),
-            WalletRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $page = $request->query->getInt('page', 1);
+        $user = $this->getUser();
+        $pagination = $this->walletService->createPaginatedList($page, $user);
+
+        $balance = $this->walletService->balance($user);
 
         return $this->render(
             'wallet/index.html.twig',
-            ['pagination' => $pagination]
+            [
+                'pagination' => $pagination,
+                'balance' => $balance,
+            ]
         );
     }
 
@@ -102,10 +122,11 @@ class WalletController extends AbstractController
         $form = $this->createForm(WalletType::class, $wallet);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $wallet->setCreatedAt(new \DateTime());
+        $user = $this->getUser();
+        $balance = $this->walletService->balance($user);
 
-            $walletRepository->save($wallet);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->walletService->save($wallet, $user);
 
             $this->addFlash('success', 'message_created_successfully');
 
@@ -114,7 +135,10 @@ class WalletController extends AbstractController
 
         return $this->render(
             'wallet/create.html.twig',
-            ['form' => $form->createView()]
+            [
+                'form' => $form->createView(),
+                'balance' => $balance,
+            ]
         );
     }
 
