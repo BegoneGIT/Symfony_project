@@ -126,11 +126,18 @@ class WalletController extends AbstractController
         $balance = $this->walletService->balance($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->walletService->save($wallet, $user);
+            $transactionType = $form->getNormData()->getTransactionType()->getName();
+            $amount = $form->getNormData()->getAmount();
 
-            $this->addFlash('success', 'message_created_successfully');
+            if ('expense' === $transactionType && $balance < $amount) {
+                $this->addFlash('error', 'message_too_much_substracted');
+            } else {
+                $this->walletService->save($wallet, $user);
 
-            return $this->redirectToRoute('wallet_index');
+                $this->addFlash('success', 'message_created_successfully');
+
+                return $this->redirectToRoute('wallet_index');
+            }
         }
 
         return $this->render(
@@ -171,12 +178,23 @@ class WalletController extends AbstractController
         $form = $this->createForm(WalletType::class, $wallet, ['method' => 'PUT']);
         $form->handleRequest($request);
 
+        $user = $this->getUser();
+        $balance = $this->walletService->balance($user);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $walletRepository->save($wallet);
+            $transactionType = $form->getNormData()->getTransactionType()->getName();
+            $amount = $form->getNormData()->getAmount();
 
-            $this->addFlash('success', 'message_updated_successfully');
+            if ('expense' === $transactionType && $balance < $amount) {
+                $this->addFlash('error', 'message_too_much_substracted');
+            } else {
+                $walletRepository->save($wallet);
 
-            return $this->redirectToRoute('wallet_index');
+                $this->addFlash('success', 'message_updated_successfully');
+
+                return $this->redirectToRoute('wallet_index');
+            }
+
         }
 
         return $this->render(
