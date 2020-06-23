@@ -39,16 +39,16 @@ class AccountService
     }
 
     /**
-     * Delete wallet.
+     * Delete user.
      *
-     * @param \App\Entity\Wallet $wallet Wallet entity
+     * @param \App\Entity\User $user User entity
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function delete(Wallet $wallet): void
+    public function delete(User $user): void
     {
-        $this->walletRepository->delete($wallet);
+        $this->userRepository->delete($user);
     }
 
 }

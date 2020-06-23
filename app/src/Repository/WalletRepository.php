@@ -5,6 +5,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Label;
+use App\Entity\PaymentTypes;
+use App\Entity\TransactionTypes;
 use App\Entity\User;
 use App\Entity\Wallet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -42,34 +45,92 @@ class WalletRepository extends ServiceEntityRepository
         parent::__construct($registry, Wallet::class);
     }
 
+//    /**
+//     * Query all records.
+//     *
+//     * @return \Doctrine\ORM\QueryBuilder Query builder
+//     */
+//    public function queryAll(): QueryBuilder
+//    {
+//        return $this->getOrCreateQueryBuilder()
+//            ->orderBy('wallet.createdAt', 'DESC');
+//    }
+
     /**
      * Query all records.
      *
+     * @param array $filters Filters array
+     *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(array $filters = []): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial wallet.{id, createdAt, amount}',
+                'partial paymentType.{id, name, code}',
+                'partial transactionType.{id, name, code}',
+                'partial label.{id, name}'
+            )
+            ->join('wallet.label', 'label')
+            ->join('wallet.paymentType', 'paymentType')
+            ->join('wallet.transactionType', 'transactionType')
             ->orderBy('wallet.createdAt', 'DESC');
+        $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param array                      $filters      Filters array
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['wallet']) && $filters['wallet'] instanceof Wallet) {
+            $queryBuilder->andWhere('wallet = :wallet')
+                ->setParameter('wallet', $filters['wallet']);
+        }
+
+        if (isset($filters['label']) && $filters['label'] instanceof Label) {
+            $queryBuilder->andWhere('label = :label')
+                ->setParameter('label', $filters['label']);
+        }
+
+        if (isset($filters['paymentType']) && $filters['paymentType'] instanceof PaymentTypes) {
+            $queryBuilder->andWhere('paymentType IN (:paymentType)')
+                ->setParameter('paymentType', $filters['paymentType']);
+        }
+
+        if (isset($filters['transactionType']) && $filters['transactionType'] instanceof TransactionTypes) {
+            $queryBuilder->andWhere('transactionType IN (:transactionType)')
+                ->setParameter('transactionType', $filters['transactionType']);
+        }
+
+        return $queryBuilder;
     }
 
     /**
      * Query wallet by author.
      *
-     * @param \App\Entity\User $user User entity
+     * @param \App\Entity\User $user    User entity
+     * @param array            $filters Filters array
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */
-    public function queryByAuthor(User $user): QueryBuilder
+    public function queryByAuthor(User $user, array $filters = []): QueryBuilder
     {
-        $queryBuilder = $this->queryAll();
+        $queryBuilder = $this->queryAll($filters);
 
         $queryBuilder->andWhere('wallet.author = :author')
             ->setParameter('author', $user);
 
         return $queryBuilder;
     }
-
 
     /**
      * Get or create new query builder.

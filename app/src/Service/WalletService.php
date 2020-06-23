@@ -5,11 +5,19 @@
 
 namespace App\Service;
 
+use App\Entity\PaymentTypes;
+use App\Entity\TransactionTypes;
 use App\Entity\User;
 use App\Entity\Wallet;
+use App\Repository\LabelRepository;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\Types\Mixed_;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Service\PaymentTypesService;
+use App\Service\TransactionTypesService;
 
 /**
  * Class WalletService.
@@ -24,6 +32,34 @@ class WalletService
     private $walletRepository;
 
     /**
+     * Label repository.
+     *
+     * @var \App\Repository\LabelRepository
+     */
+    private $labelRepository;
+
+    /**
+     * Label service.
+     *
+     * @var \App\Service\LabelService
+     */
+    private $labelService;
+
+    /**
+     * PaymentTypes service.
+     *
+     * @var \App\Service\PaymentTypesService
+     */
+    private $paymentTypesService;
+
+    /**
+     * TransactionTypes service.
+     *
+     * @var \App\Service\TransactionTypesService
+     */
+    private $transactionTypesService;
+
+    /**
      * Paginator.
      *
      * @var \Knp\Component\Pager\PaginatorInterface
@@ -36,23 +72,49 @@ class WalletService
      * @param \App\Repository\WalletRepository        $walletRepository Wallet repository
      * @param \Knp\Component\Pager\PaginatorInterface $paginator        Paginator
      */
-    public function __construct(WalletRepository $walletRepository, PaginatorInterface $paginator)
-    {
+    public function __construct(
+        WalletRepository $walletRepository,
+        PaginatorInterface $paginator,
+        LabelRepository $labelRepository,
+        LabelService $labelService,
+        PaymentTypesService $paymentTypesService,
+        TransactionTypesService $transactionTypesService
+        ) {
         $this->walletRepository = $walletRepository;
         $this->paginator = $paginator;
+        $this->labelRepository = $labelRepository;
+        $this->labelService = $labelService;
+        $this->paymentTypesService = $paymentTypesService;
+        $this->transactionTypesService = $transactionTypesService;
+    }
+
+    /**
+     * Find wallet by Id.
+     *
+     * @param int $id Wallet Id
+     *
+     * @return \App\Entity\Label|null Label entity
+     */
+    public function findOneById(int $id): ?Wallet
+    {
+        return $this->walletRepository->findOneById($id);
     }
 
     /**
      * Create paginated list.
      *
-     * @param int $page Page number
+     * @param int                                                 $page    Page number
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user    User entity
+     * @param array                                               $filters Filters array
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface Paginated list
      */
-    public function createPaginatedList(int $page, User $user): PaginationInterface
+    public function createPaginatedList(int $page, UserInterface $user, array $filters = []): PaginationInterface
     {
+        $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
-            $this->walletRepository->queryByAuthor($user),
+            $this->walletRepository->queryByAuthor($user, $filters),
             $page,
             WalletRepository::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -87,7 +149,7 @@ class WalletService
     }
 
     /**
-     * Calculate baance.
+     * Calculate balance.
      */
     public function balance(User $user)
     {
@@ -105,5 +167,62 @@ class WalletService
         $balance = abs($income - $expense);
 
         return $balance;
+    }
+
+    /**
+     * @param array $filters
+     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
+     *
+     */
+    public function get_filters(Request $request,array $filters){
+        $filterKey = key($request->query->getAlnum('filters'));
+        $filters[$filterKey] = $request->query->getAlnum('filters', '')[$filterKey];
+
+        return $filters;
+    }
+
+    /**
+     * Prepare filters for the wallets list.
+     *
+     * @param array $filters Raw filters from request
+     *
+     * @return array Result array of filters
+     */
+    private function prepareFilters(array $filters): array
+    {
+        $resultFilters = [];
+        if (isset($filters['wallet']) && is_numeric($filters['wallet'])) {
+            $wallet = $this->findOneById(
+                $filters['wallet']
+            );
+            if (null !== $wallet) {
+                $resultFilters['wallet'] = $wallet;
+            }
+        }
+
+        if (isset($filters['label']) && is_numeric($filters['label'])) {
+            $label = $this->labelService->findOneById($filters['label']);
+            if (null !== $label) {
+                $resultFilters['label'] = $label;
+            }
+        }
+
+        if (isset($filters['paymentType']) && is_numeric($filters['paymentType'])) {
+            $paymentType = $this->paymentTypesService->findOneById($filters['paymentType']);
+            if (null !== $paymentType) {
+                $resultFilters['paymentType'] = $paymentType;
+            }
+        }
+
+        if (isset($filters['transactionType']) && is_numeric($filters['transactionType'])) {
+            $transactionType = $this->transactionTypesService->findOneById($filters['transactionType']);
+            if (null !== $transactionType) {
+                $resultFilters['transactionType'] = $transactionType;
+            }
+        }
+
+        dump($resultFilters);
+
+        return $resultFilters;
     }
 }
