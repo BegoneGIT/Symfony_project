@@ -58,7 +58,6 @@ class WalletController extends AbstractController
      */
     public function index(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
     {
-//        $page = $request->query->getInt('page', 1);
         $user = $this->getUser();
         $filters = [];
         $urlFilters = $request->query->getAlnum('filters', '');
