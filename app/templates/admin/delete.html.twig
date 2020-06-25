@@ -1,9 +1,9 @@
 {% include 'default/_form.html.twig' with {
-    page_title: 'title_wallet_edit'|trans,
+    page_title: 'title_wallet_delete',
     page_title_param: {'%id%': wallet.id},
     attr: {
-        method: 'PUT',
-        action: url('wallet_edit', {'id': wallet.id}),
+        method: 'DELETE',
+        action: url('wallet_delete', {'id': wallet.id}),
     },
     back_to_list_path: 'wallet_index',
 } %}

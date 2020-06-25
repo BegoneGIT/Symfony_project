@@ -15,11 +15,23 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountService
 {
     /**
+     * UserRepository repository.
+     *
+     * @var \App\Repository\UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+
+    /**
      * Account constructor.
      *
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder Password encoder
      */
-    public function __construct(UserRepository$userRepository, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->userRepository = $userRepository;
         $this->passwordEncoder = $passwordEncoder;
@@ -27,7 +39,6 @@ class AccountService
 
     /**
      * Change password.
-     *
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -50,5 +61,4 @@ class AccountService
     {
         $this->userRepository->delete($user);
     }
-
 }

@@ -6,11 +6,26 @@
 
 {% block body %}
     <h1>{{ 'title_wallet_list'|trans }}</h1>
+
+
+    <!--    DATE FORM  {#
+    {{ form_start(form, { method: 'GET', action: url('wallet_index') }) }}
+    {{ form_widget(form) }}
+    <div class="form-group row float-sm-right">
+        <input type="submit" value="{{ 'action_save'|trans }}" class="btn btn-primary" />
+    </div>
+    {{ form_end(form) }}
+#}
+      END  DATE FORM    -->
+    {{ form(form) }}
+
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
+
+
 
         <table class="table table-striped">
             <thead>

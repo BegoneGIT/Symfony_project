@@ -13,11 +13,8 @@ use App\Repository\LabelRepository;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use phpDocumentor\Reflection\Types\Mixed_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Service\PaymentTypesService;
-use App\Service\TransactionTypesService;
 
 /**
  * Class WalletService.
@@ -170,11 +167,10 @@ class WalletService
     }
 
     /**
-     * @param array $filters
-     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      */
-    public function get_filters(Request $request,array $filters){
+    public function get_filters(Request $request, array $filters)
+    {
         $filterKey = key($request->query->getAlnum('filters'));
         $filters[$filterKey] = $request->query->getAlnum('filters', '')[$filterKey];
 

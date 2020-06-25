@@ -8,16 +8,8 @@
     <h1>{{ 'title_label_details'|trans({'%id%': label.id|default('')}) }}</h1>
     {% if label is defined and label|length %}
         <dl class="dl-horizontal">
-            <dt>{{ 'label_id'|trans }}</dt>
-            <dd>{{ label.id }}</dd>
-            <dt>{{ 'label_created_at'|trans }}</dt>
-            <dd>{{ label.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label_updated_at'|trans }}</dt>
-            <dd>{{ label.updatedAt|format_date('long') }}</dd>
-            <dt>{{ 'label_category'|trans }}</dt>
-            <dd>{{  label.category.title }}</dd>
-            <dt>{{ 'label_title'|trans }}</dt>
-            <dd>{{  label.title }}</dd>
+            <dt>{{ 'label_name'|trans }}</dt>
+            <dd>{{  label.name }}</dd>
         </dl>
         <p>
             <a href="{{ url('label_index') }}" title="{{ 'action_back_to_list'|trans }}">

@@ -15,7 +15,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'label.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'label.name') }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
@@ -23,7 +22,6 @@
             <tbody>
             {% for label in pagination.items %}
                 <tr>
-                    <td>{{ label.id }}</td>
                     <td>{{ label.name }}</td>
                     <td>
                         {% if is_granted('VIEW', label) %}

@@ -6,13 +6,16 @@
 namespace App\Controller;
 
 use App\Entity\Wallet;
+use App\Form\WalletDatesType;
 use App\Form\WalletType;
 use App\Repository\WalletRepository;
 use App\Service\WalletService;
+use Doctrine\DBAL\Types\DateType;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,6 +61,12 @@ class WalletController extends AbstractController
      */
     public function index(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
     {
+
+        $form = $this->createForm(WalletDatesType::class)->handleRequest($request);
+
+
+        dump($form);
+
         $user = $this->getUser();
         $filters = [];
         $urlFilters = $request->query->getAlnum('filters', '');
@@ -73,16 +82,64 @@ class WalletController extends AbstractController
 
         $balance = $this->walletService->balance($user);
 
-//        dump($pagination);
-
         return $this->render(
             'wallet/index.html.twig',
             [
                 'pagination' => $pagination,
                 'balance' => $balance,
+                'form' => $form->createView(),
             ]
         );
     }
+
+
+//    /**
+//     * Search action.
+//     *
+//     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
+//     * @param \App\Repository\WalletRepository          $walletRepository Wallet repository
+//     * @param \Knp\Component\Pager\PaginatorInterface   $paginator        Paginator
+//     *
+//     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+//     *
+//     * @Route(
+//     *     "/{date}",
+//     *     methods={"GET"},
+//     *     name="wallet_search",
+//     * )
+//     */
+//    public function search(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
+//    {
+//
+//        $routeParameters = $request->attributes->get('_route_params');
+//        $form = $this->createForm(WalletDatesType::class);
+//
+//        dump($form);
+//
+//        $user = $this->getUser();
+//        $filters = [];
+//        $urlFilters = $request->query->getAlnum('filters', '');
+//        if ($urlFilters) {
+//            $filters = $this->walletService->get_filters($request, $urlFilters);
+//        }
+//
+//        $pagination = $this->walletService->createPaginatedList(
+//            $request->query->getInt('page', 1),
+//            $this->getUser(),
+//            $filters
+//        );
+//
+//        $balance = $this->walletService->balance($user);
+//
+//        return $this->render(
+//            'wallet/index.html.twig',
+//            [
+//                'pagination' => $pagination,
+//                'balance' => $balance,
+//                'form' => $form,
+//            ]
+//        );
+//    }
 
     /**
      * Show action.
