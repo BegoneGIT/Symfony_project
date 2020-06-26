@@ -9,10 +9,10 @@ use App\Entity\Label;
 use App\Entity\PaymentTypes;
 use App\Entity\TransactionTypes;
 use App\Entity\Wallet;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -20,7 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class WalletType extends AbstractType
 {
-
     /**
      * Builds the form.
      *
@@ -34,14 +33,13 @@ class WalletType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder->add(
             'label',
             EntityType::class,
             [
                 'class' => Label::class,
                 'choice_label' => function ($label) {
-                    return $label->getName();
+                        return $label->getName();
                 },
                 'label' => 'label_category',
                 'placeholder' => 'label_none',

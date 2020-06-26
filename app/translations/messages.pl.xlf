@@ -109,11 +109,11 @@
         </trans-unit>
         <trans-unit id="label_paymentType">
             <source>label_paymentType</source>
-            <target>Wydatek czy przychód</target>
+            <target>Karta czy gotówka</target>
         </trans-unit>
         <trans-unit id="label_transaction">
             <source>label_transaction</source>
-            <target>Karta czy gotówka</target>
+            <target>Wydatek czy przychód</target>
         </trans-unit>
         <trans-unit id="label_label">
             <source>label_label</source>
@@ -121,8 +121,99 @@
         </trans-unit>
         <trans-unit id="label_amount">
             <source>label_amount</source>
-            <target>Ilość</target>
+            <target>Kwota (w zł)</target>
         </trans-unit>
+
+        <trans-unit id="label_income">
+            <source>label_income</source>
+            <target>Przychód</target>
+        </trans-unit>
+        <trans-unit id="label_expense">
+            <source>label_expense</source>
+            <target>Wydatek</target>
+        </trans-unit>
+        <trans-unit id="label_card">
+            <source>label_card</source>
+            <target>Karta</target>
+        </trans-unit>
+        <trans-unit id="label_cash">
+            <source>label_cash</source>
+            <target>Gotówka</target>
+        </trans-unit>
+        <trans-unit id="label_date_from">
+            <source>label_date_from</source>
+            <target>Od</target>
+        </trans-unit>
+        <trans-unit id="label_date_to">
+            <source>label_date_to</source>
+            <target>Do</target>
+        </trans-unit>
+        <trans-unit id="title_label_list">
+                <source>title_label_list</source>
+                <target>Opisy zakupów</target>
+        </trans-unit>
+        <trans-unit id="label_wallet">
+                <source>label_wallet</source>
+                <target>Lista operacji</target>
+        </trans-unit>
+        <trans-unit id="user_details">
+                <source>user_details</source>
+                <target>Konto</target>
+        </trans-unit>
+        <trans-unit id="label_labels">
+            <source>label_labels</source>
+            <target>Kategorie zakupów</target>
+        </trans-unit>
+        <trans-unit id="action_search">
+            <source>action_search</source>
+            <target>Wyszukaj</target>
+        </trans-unit>
+        <trans-unit id="message_updated_successfully">
+            <source>message_updated_successfully</source>
+            <target>Element został zapisany</target>
+        </trans-unit>
+        <trans-unit id="label_logout">
+            <source>label_logout</source>
+            <target>Wyloguj się</target>
+        </trans-unit>
+        <trans-unit id="label_register">
+            <source>label_register</source>
+            <target>Rejestracja</target>
+        </trans-unit>
+        <trans-unit id="label_add">
+            <source>label_add</source>
+            <target>Dodaj</target>
+        </trans-unit>
+        <trans-unit id="message_created_successfully">
+            <source>message_created_successfully</source>
+            <target>Opis został dodany</target>
+        </trans-unit>
+        <trans-unit id="action_save">
+            <source>action_save</source>
+            <target>Potwierdź</target>
+        </trans-unit>
+        <trans-unit id="message_deleted_successfully">
+            <source>message_deleted_successfully</source>
+            <target>Element został usunięty</target>
+        </trans-unit>
+        <trans-unit id="title_user_details">
+            <source>title_user_details</source>
+            <target>Informacje o użytkowniku</target>
+        </trans-unit>
+        <trans-unit id="message_too_much_substracted">
+            <source>message_too_much_substracted</source>
+            <target>Wydatek nie może być większy niż saldo portfela</target>
+        </trans-unit>
+        <trans-unit id="label_none">
+            <source>label_none</source>
+            <target>Wybierz z listy</target>
+        </trans-unit>
+        <trans-unit id="label_category">
+            <source>label_category</source>
+            <target>Opis zakupu</target>
+        </trans-unit>
+
+
         </body>
     </file>
 </xliff>

@@ -8,15 +8,16 @@
     <h1>{{ 'title_wallet_details'|trans({'%id%': wallet.id|default('')}) }}</h1>
     {% if wallet is defined and wallet|length %}
         <dl class="dl-horizontal">
-            <dt>{{ 'label_id'|trans }}</dt>
-            <dd>{{ wallet.id }}</dd>
             <dt>{{ 'label_created_at'|trans }}</dt>
-            <dd>{{ wallet.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label_updated_at'|trans }}</dt>
-            <dd>{{ wallet.updatedAt|format_date('long') }}</dd>
-            <dt>{{ 'label_wallet'|trans }}</dt>
-            <dt>{{ 'label_title'|trans }}</dt>
-            <dd>{{  wallet.title }}</dd>
+            <dd>{{ wallet.createdAt|date("d/m/Y") }}</dd>
+            <dt>{{ 'label_amount'|trans }}</dt>
+            <dd>{{ wallet.amount }}</dd>
+            <dt>{{ 'label_paymentType'|trans }}</dt>
+            <dd>{{ wallet.paymentType.code|trans }}</dd>
+            <dt>{{ 'label_transaction'|trans }}</dt>
+            <dd>{{  wallet.transactionType.code|trans }}</dd>
+            <dt>{{ 'label_label'|trans }}</dt>
+            <dd>{{  wallet.label.name }}</dd>
         </dl>
         <p>
             <a href="{{ url('wallet_index') }}" title="{{ 'action_back_to_list'|trans }}">

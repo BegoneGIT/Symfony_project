@@ -41,15 +41,10 @@ class LabelController extends AbstractController
     public function index(Request $request, LabelRepository $labelRepository, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
-        $labelRepository->queryByAuthor($this->getUser()),
+            $labelRepository->queryByAuthor($this->getUser()),
             $request->query->getInt('page', 1),
             LabelRepository::PAGINATOR_ITEMS_PER_PAGE
         );
-//        $pagination = $paginator->paginate(
-//            $labelRepository->queryAll(),
-//            $request->query->getInt('page', 1),
-//            LabelRepository::PAGINATOR_ITEMS_PER_PAGE
-//        );
 
         return $this->render(
             'label/index.html.twig',

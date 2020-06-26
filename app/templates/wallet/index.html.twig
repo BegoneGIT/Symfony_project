@@ -9,8 +9,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_wallet_list'|trans }}</h1>
-
+        <div style="display: flex; width: 100%">
+            <h1>{{ 'title_wallet_list'|trans }}</h1>
+            <div style="flex: 2"></div>
+            <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('label_index') }}">{{ 'label_labels'|trans }}</a></button>
+            <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('user_show') }}">{{ 'user_details'|trans }}</a></button>
+            <button class="btn btn-primary" style="flex: 0.7;margin:0.5%;"><a style="color: white;" href="{{ url('app_logout') }}">{{ 'label_logout'|trans }}</a></button>
+        </div>
 
     <!--    DATE FORM  -->
     {{ form_start(form, { method: 'GET', action: url('wallet_index') }) }}
@@ -22,7 +27,7 @@
     {% endif %}
     {{ form_widget(form) }}
     <div class="form-group row float-sm-right">
-        <input type="submit" value="{{ 'action_save'|trans }}" class="btn btn-primary" />
+        <input type="submit" value="{{ 'action_search'|trans }}" class="btn btn-primary" />
     </div>
     {{ form_end(form) }}
 
@@ -41,9 +46,9 @@
          <thead>
          <tr>
              <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'wallet.createdAt') }}</th>
-             <th>{{ knp_pagination_sortable(pagination, 'label_paymentType'|trans, 'wallet.paymentType.code') }}</th>
-             <th>{{ knp_pagination_sortable(pagination, 'label_transaction'|trans, 'wallet.transactionType.code') }}</th>
-             <th>{{ knp_pagination_sortable(pagination, 'label_label'|trans, 'wallet.label.name') }}</th>
+             <th>{{ 'label_paymentType'|trans}}</th>
+             <th>{{ 'label_transaction'|trans}}</th>
+             <th>{{ 'label_label'|trans}}</th>
              <th>{{ 'label_amount'|trans }}</th>
              <th>{{ 'label_actions'|trans }}</th>
          </tr>
@@ -53,10 +58,10 @@
              <tr>
                  <td>{{ wallet.createdAt|date("d/m/Y") }}</td>
                  <td>
-                     <a href="{{ url('wallet_index', {'filters' : {'paymentType' : wallet.paymentType.id}}) }}" title="{{ wallet.paymentType.code }}">{{ wallet.paymentType.code|trans }}
+                     <a href="{{ url('wallet_index', {'filters' : {'paymentType' : wallet.paymentType.id}}) }}" title="{{ wallet.paymentType.code|trans }}">{{ wallet.paymentType.code|trans }}
                  </td>
                  <td>
-                     <a href="{{ url('wallet_index', {'filters' : {'transactionType' : wallet.transactionType.id}}) }}" title="{{ wallet.transactionType.code }}">{{ wallet.transactionType.code }}
+                     <a href="{{ url('wallet_index', {'filters' : {'transactionType' : wallet.transactionType.id}}) }}" title="{{ wallet.transactionType.code|trans }}">{{ wallet.transactionType.code|trans }}
                  </td>
                  <td>
                      <a href="{{ url('wallet_index', {'filters' : {'label' : wallet.label.id}}) }}" title="{{ wallet.label.name }}">{{ wallet.label.name }}
@@ -96,6 +101,9 @@
          {{ 'message_empty_list'|trans }}
      </p>
  {% endif %}
+    <div style="display: flex; width: 100%; flex-direction: row-reverse;">
+        <button class="btn btn-primary" style="flex: 0.1;margin:0.5%;"><a style="color: white;" href="{{ url('wallet_create') }}">{{ 'title_wallet_create'|trans }}</a></button>
+    </div>
 {% endblock %}
 {% block javascripts %}
  {{ parent() }}

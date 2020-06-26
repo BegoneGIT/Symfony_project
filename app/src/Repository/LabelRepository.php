@@ -10,6 +10,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class LabelRepository.
@@ -73,7 +74,7 @@ class LabelRepository extends ServiceEntityRepository
     /**
      * Query label by author.
      *
-     * @param \App\Entity\User $user User entity
+     * @param UserInterface $user User entity
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */

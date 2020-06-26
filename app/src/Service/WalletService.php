@@ -162,7 +162,7 @@ class WalletService
                 $expense += $existingWallet->getAmount();
             }
         }
-        $balance = abs($income - $expense);
+        $balance = $income - $expense;
 
         return $balance;
     }
@@ -218,7 +218,6 @@ class WalletService
             }
         }
 
-        dump($resultFilters);
 
         return $resultFilters;
     }

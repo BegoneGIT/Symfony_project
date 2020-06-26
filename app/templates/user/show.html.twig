@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_user_details'|trans({'%id%': user.id|default('')}) }}</h1>
+    <div style="display: flex; width: 100%">
+        <h1>{{ 'title_user_details'|trans({'%id%': user.id|default('')}) }}</h1>
+        <div style="flex: 2"></div>
+        <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('wallet_index') }}">{{ 'label_wallet'|trans }}</a></button>
+        <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('label_index') }}">{{ 'label_labels'|trans }}</a></button>
+        <button class="btn btn-primary" style="flex: 0.7;margin:0.5%;"><a style="color: white;" href="{{ url('app_logout') }}">{{ 'label_logout'|trans }}</a></button>
+    </div>
     {% if user is defined and user|length %}
         <dl class="dl-horizontal">
             <dt>{{ 'label_email'|trans }}</dt>

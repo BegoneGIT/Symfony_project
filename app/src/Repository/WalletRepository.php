@@ -126,7 +126,6 @@ class WalletRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->queryAll($filters);
 
-        dump($dates);
 
         $queryBuilder->andWhere('wallet.author = :author')
             ->setParameter('author', $user);
