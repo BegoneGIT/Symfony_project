@@ -122,12 +122,20 @@ class WalletRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */
-    public function queryByAuthor(User $user, array $filters = []): QueryBuilder
+    public function queryByAuthor(User $user, array $filters = [], $dates = null): QueryBuilder
     {
         $queryBuilder = $this->queryAll($filters);
 
+        dump($dates);
+
         $queryBuilder->andWhere('wallet.author = :author')
             ->setParameter('author', $user);
+
+        if ($dates) {
+            $queryBuilder->andWhere('wallet.createdAt BETWEEN :date_from AND :date_to')
+                ->setParameter('date_from', $dates['date_from'])
+                ->setParameter('date_to', $dates['date_to']);
+        }
 
         return $queryBuilder;
     }

@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Entity\Wallet;
 use App\Repository\LabelRepository;
 use App\Repository\WalletRepository;
+use Doctrine\DBAL\Types\DateType;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,12 +107,12 @@ class WalletService
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface Paginated list
      */
-    public function createPaginatedList(int $page, UserInterface $user, array $filters = []): PaginationInterface
+    public function createPaginatedList(int $page, UserInterface $user, array $filters = [], $dates = null): PaginationInterface
     {
         $filters = $this->prepareFilters($filters);
 
         return $this->paginator->paginate(
-            $this->walletRepository->queryByAuthor($user, $filters),
+            $this->walletRepository->queryByAuthor($user, $filters, $dates),
             $page,
             WalletRepository::PAGINATOR_ITEMS_PER_PAGE
         );

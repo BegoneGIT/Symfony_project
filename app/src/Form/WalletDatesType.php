@@ -5,9 +5,9 @@
 
 namespace App\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,23 +31,35 @@ class WalletDatesType extends AbstractType
     {
         $builder->add(
             'date_from',
-            SearchType::class,
+            DateType::class,
             [
-                'data_class' => DateType::class,
+//               'data_class' => DateType::class,
                 'label' => 'label_date_from',
                 'required' => true,
+                'widget' => 'single_text',
+                'input_format' => 'd-m-Y',
             ]
         );
 
         $builder->add(
             'date_to',
-            SearchType::class,
+            DateType::class,
             [
-                'data_class' => DateType::class,
+//                'data_class' => DateType::class,
                 'label' => 'label_date_to',
                 'required' => true,
+                'widget' => 'single_text',
+                'input_format' => 'd-m-Y',
             ]
         );
+//
+//        $builder->add(
+//            'search',
+//            SubmitType::class,
+//            [
+//                'label' => 'label_go',
+//            ]
+//        );
     }
 
     /**

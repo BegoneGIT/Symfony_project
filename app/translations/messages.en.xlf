@@ -51,10 +51,6 @@
             <source>label_name</source>
             <target>Label name</target>
         </trans-unit>
-        <trans-unit id="label_actions">
-            <source>label_actions</source>
-            <target>Label actions</target>
-        </trans-unit>
         <trans-unit id="action_view">
             <source>action_view</source>
             <target>Inspect</target>
