@@ -103,7 +103,11 @@
  {% endif %}
     <div style="display: flex; width: 100%; flex-direction: row-reverse;">
         <button class="btn btn-primary" style="flex: 0.1;margin:0.5%;"><a style="color: white;" href="{{ url('wallet_create') }}">{{ 'title_wallet_create'|trans }}</a></button>
+        {% if is_granted('ROLE_ADMIN') %}
+        <button class="btn btn-primary" style="flex: 0.1;margin:0.5%;"><a style="color: white;" href="{{ url('show_users') }}">{{ 'label_show_users'|trans }}</a></button>
+        {% endif %}
     </div>
+
 {% endblock %}
 {% block javascripts %}
  {{ parent() }}

@@ -212,6 +212,42 @@
             <source>label_category</source>
             <target>Opis zakupu</target>
         </trans-unit>
+        <trans-unit id="action_register">
+            <source>action_register</source>
+            <target>Zarejestruj się</target>
+        </trans-unit>
+        <trans-unit id="label_password">
+            <source>label_password</source>
+            <target>Wpisz hasło</target>
+        </trans-unit>
+        <trans-unit id="label_repeat_password">
+            <source>label_repeat_password</source>
+            <target>Powtórz hasło</target>
+        </trans-unit>
+        <trans-unit id="title_password_edit ">
+            <source>title_password_edit</source>
+            <target>Edycja hasła</target>
+        </trans-unit>
+        <trans-unit id="label_roles">
+            <source>label_roles</source>
+            <target>Rola</target>
+        </trans-unit>
+        <trans-unit id="title_users_list">
+            <source>title_users_list</source>
+            <target>Lista użytkowników</target>
+        </trans-unit>
+        <trans-unit id="ROLE_USER">
+            <source>ROLE_USER</source>
+            <target>użytkownik</target>
+        </trans-unit>
+        <trans-unit id="ROLE_ADMIN">
+            <source>ROLE_ADMIN</source>
+            <target>administrator</target>
+        </trans-unit>
+
+
+
+
 
 
         </body>

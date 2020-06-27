@@ -217,6 +217,38 @@
             <source>label_payment</source>
             <target>Card or cash?</target>
         </trans-unit>
+        <trans-unit id="action_register">
+            <source>action_register</source>
+            <target>Register</target>
+        </trans-unit>
+        <trans-unit id="label_password">
+            <source>label_password</source>
+            <target>Password</target>
+        </trans-unit>
+        <trans-unit id="label_repeat_password">
+            <source>label_repeat_password</source>
+            <target>Repeat password</target>
+        </trans-unit>
+        <trans-unit id="title_password_edit ">
+            <source>title_password_edit</source>
+            <target>Edit password</target>
+        </trans-unit>
+        <trans-unit id="label_roles">
+            <source>label_roles</source>
+            <target>Role</target>
+        </trans-unit>
+        <trans-unit id="title_users_list">
+            <source>title_users_list</source>
+            <target>User list</target>
+        </trans-unit>
+        <trans-unit id="ROLE_USER">
+            <source>ROLE_USER</source>
+            <target>user</target>
+        </trans-unit>
+        <trans-unit id="ROLE_ADMIN">
+            <source>ROLE_ADMIN</source>
+            <target>admin</target>
+        </trans-unit>
 
         </body>
     </file>

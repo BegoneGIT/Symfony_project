@@ -15,8 +15,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label_email'|trans, 'users.emails') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label_roles'|trans, 'users.roles') }}</th>
+                <th>{{ 'label_email'|trans }}</th>
+                <th>{{ 'label_roles'|trans }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
             </thead>
@@ -26,7 +26,7 @@
                     <td>{{ user.email }}</td>
                     <td>
                         {% for role in user.roles %}
-                        {{ role }}
+                        {{ role|trans }}
                         {% endfor %}
                     </td>
                     <td>
