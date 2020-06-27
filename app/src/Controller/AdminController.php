@@ -201,16 +201,12 @@ class AdminController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route(
-     *     "/{id}/delete",
+     *     "/{id}/admin_delete",
      *     methods={"GET", "DELETE"},
      *     requirements={"id": "[1-9]\d*"},
      *     name="admin_delete",
      * )
      *
-     * @IsGranted(
-     *     "DELETE",
-     *     subject="admin",
-     *     )
      */
     public function delete(Request $request, User $user, AdminRepository $repository): Response
     {
@@ -225,14 +221,14 @@ class AdminController extends AbstractController
             $repository->delete($user);
             $this->addFlash('success', 'message_deleted_successfully');
 
-            return $this->redirectToRoute('admin_index');
+            return $this->redirectToRoute('show_users');
         }
 
         return $this->render(
             'admin/delete.html.twig',
             [
                 'form' => $form->createView(),
-                'admin' => $admin,
+                'user' => $user,
             ]
         );
     }

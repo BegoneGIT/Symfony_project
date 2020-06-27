@@ -249,6 +249,11 @@
             <source>ROLE_ADMIN</source>
             <target>admin</target>
         </trans-unit>
+        <trans-unit id="user_delete">
+            <source>user_delete</source>
+            <target>Delete account</target>
+        </trans-unit>
+
 
         </body>
     </file>

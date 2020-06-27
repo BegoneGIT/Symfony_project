@@ -5,7 +5,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_users_list'|trans }}</h1>
+
+    <div style="display: flex; width: 100%">
+        <h1>{{ 'title_users_list'|trans }}</h1>
+        <div style="flex: 2"></div>
+        <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('wallet_index') }}">{{ 'label_wallet'|trans }}</a></button>
+        <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('label_index') }}">{{ 'label_labels'|trans }}</a></button>
+        <button class="btn btn-primary" style="flex: 1;margin:0.5%;"><a style="color: white;" href="{{ url('user_show') }}">{{ 'user_details'|trans }}</a></button>
+        <button class="btn btn-primary" style="flex: 0.7;margin:0.5%;"><a style="color: white;" href="{{ url('app_logout') }}">{{ 'label_logout'|trans }}</a></button>
+    </div>
+
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -41,7 +50,7 @@
                             </a>
                         {% endif %}
 {#                        {% if is_granted('DELETE', user) %}#}
-{#                        <a href="{{ url('users_delete', {id: user.id}) }}" title="{{ 'action_delete'|trans }}">#}
+{#                        <a href="{{ url('admin_delete', {id: user.id}) }}" title="{{ 'action_delete'|trans }}">#}
 {#                            {{ 'action_delete'|trans }}#}
 {#                        </a>#}
 {#                        {% endif %}#}
