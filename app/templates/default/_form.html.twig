@@ -31,7 +31,14 @@
     {{ form_end(form) }}
 
     {% if balance is defined %}
-    <h3>{{ balance }}</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ "label_balance"|trans }}</th>
+                <th>{{ balance }}zł</th>
+            </tr>
+            </thead>
+        </table>
     {% endif %}
 
 {% endblock %}

@@ -90,7 +90,15 @@
          </tbody>
      </table>
 
-     <h3>{{ balance }}</h3>
+     <table class="table table-striped">
+         <thead>
+         <tr>
+             <th>{{ "label_balance"|trans }}</th>
+             <th>{{ balance }}zł</th>
+         </tr>
+         </thead>
+     </table>
+{#     <h3>{{ balance }}</h3>#}
 
      <div class="navigation text-center">
          {{ knp_pagination_render(pagination) }}

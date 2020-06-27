@@ -253,6 +253,14 @@
             <source>user_delete</source>
             <target>Delete account</target>
         </trans-unit>
+        <trans-unit id="label_balance">
+            <source>label_balance</source>
+            <target>Account balance</target>
+        </trans-unit>
+        <trans-unit id="label_show_users">
+            <source>label_show_users</source>
+            <target>Show users</target>
+        </trans-unit>
 
 
         </body>
