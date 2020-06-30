@@ -284,6 +284,10 @@
             <source>label_password_</source>
             <target>Haslo</target>
         </trans-unit>
+        <trans-unit id="title_label_create">
+            <source>title_label_create</source>
+            <target>Dodaj opis</target>
+        </trans-unit>
 
 
 

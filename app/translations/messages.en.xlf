@@ -285,6 +285,10 @@
             <source>label_password_</source>
             <target>Password</target>
         </trans-unit>
+        <trans-unit id="title_label_create">
+            <source>title_label_create</source>
+            <target>Create label</target>
+        </trans-unit>
 
 
 
