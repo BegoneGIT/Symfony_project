@@ -260,7 +260,30 @@
             <source>label_show_users</source>
             <target>Pokaż użytkowników</target>
         </trans-unit>
-
+        <trans-unit id="title_login">
+            <source>title_login</source>
+            <target>Zaloguj się!</target>
+        </trans-unit>
+        <trans-unit id="label_agree">
+            <source>label_agree</source>
+            <target>Musisz zaakceptować warunki serwisu</target>
+        </trans-unit>
+        <trans-unit id="label_enter_password">
+            <source>label_enter_password</source>
+            <target>Wprowadź hasło</target>
+        </trans-unit>
+        <trans-unit id="label_password_short">
+            <source>label_password_short</source>
+            <target>Hasło jest za krótkie</target>
+        </trans-unit>
+        <trans-unit id="label_terms">
+            <source>label_terms</source>
+            <target>Warunki</target>
+        </trans-unit>
+        <trans-unit id="label_password_">
+            <source>label_password_</source>
+            <target>Haslo</target>
+        </trans-unit>
 
 
 

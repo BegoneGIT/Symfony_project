@@ -24,6 +24,8 @@ class Wallet
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Assert\NotBlank
      */
     private $amount;
 

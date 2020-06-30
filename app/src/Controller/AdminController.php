@@ -93,56 +93,6 @@ class AdminController extends AbstractController
         );
     }
 
-//    /**
-//     * Create action.
-//     *
-//     * @param \Symfony\Component\HttpFoundation\Request $request         HTTP request
-//     * @param \App\Repository\AdminRepository          $adminRepository Account repository
-//     *
-//     * @return \Symfony\Component\HttpFoundation\Response HTTP response
-//     *
-//     * @throws \Doctrine\ORM\ORMException
-//     * @throws \Doctrine\ORM\OptimisticLockException
-//     *
-//     * @Route(
-//     *     "/create",
-//     *     methods={"GET", "POST"},
-//     *     name="admin_create",
-//     * )
-//     */
-//    public function create(Request $request, AdminRepository $adminRepository): Response
-//    {
-//        $admin = new User();
-//        $form = $this->createForm(AccountType::class, $admin);
-//        $form->handleRequest($request);
-//
-//        $user = $this->getAccount();
-//        $balance = $this->adminService->balance($user);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $transactionType = $form->getNormData()->getTransactionType()->getName();
-//            $amount = $form->getNormData()->getAmount();
-//
-//            if ('expense' === $transactionType && $balance < $amount) {
-//                $this->addFlash('error', 'message_too_much_substracted');
-//            } else {
-//                $this->adminService->save($user, $user);
-//
-//                $this->addFlash('success', 'message_created_successfully');
-//
-//                return $this->redirectToRoute('admin_index');
-//            }
-//        }
-//
-//        return $this->render(
-//            'admin/create.html.twig',
-//            [
-//                'form' => $form->createView(),
-//                'balance' => $balance,
-//            ]
-//        );
-//    }
-
     /**
      * Edit action.
      *

@@ -261,6 +261,32 @@
             <source>label_show_users</source>
             <target>Show users</target>
         </trans-unit>
+        <trans-unit id="title_login">
+            <source>title_login</source>
+            <target>Please log in.</target>
+        </trans-unit>
+        <trans-unit id="label_agree">
+            <source>label_agree</source>
+            <target>You must agree on terms</target>
+        </trans-unit>
+        <trans-unit id="label_enter_password">
+            <source>label_enter_password</source>
+            <target>Please enter password</target>
+        </trans-unit>
+        <trans-unit id="label_password_short">
+            <source>label_password_short</source>
+            <target>Your password is too short.</target>
+        </trans-unit>
+        <trans-unit id="label_terms">
+            <source>label_terms</source>
+            <target>Agree on terms</target>
+        </trans-unit>
+        <trans-unit id="label_password_">
+            <source>label_password_</source>
+            <target>Password</target>
+        </trans-unit>
+
+
 
 
         </body>
