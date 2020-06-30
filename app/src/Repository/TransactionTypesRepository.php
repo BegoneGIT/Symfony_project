@@ -14,37 +14,39 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TransactionTypesRepository extends ServiceEntityRepository
 {
+    /**
+     * TransactionTypesRepository constructor.
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, TransactionTypes::class);
     }
 
-    // /**
-    //  * @return TransactionType[] Returns an array of TransactionType objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Save transactionType.
+     *
+     * @param \App\Entity\TransactionTypes $transactionType TransactionTypes entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(TransactionTypes $transactionType): void
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->_em->persist($transactionType);
+        $this->_em->flush($transactionType);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?TransactionType
+    /**
+     * Delete transactionType.
+     *
+     * @param \App\Entity\TransactionTypes $transactionType TransactionTypes entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(TransactionTypes $transactionType): void
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->_em->remove($transactionType);
+        $this->_em->flush($transactionType);
     }
-    */
 }

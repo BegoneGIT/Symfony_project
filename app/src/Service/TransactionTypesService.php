@@ -22,32 +22,32 @@ class TransactionTypesService
     }
 
     /**
-     * Save label.
-     * @param TransactionTypes $label label label
+     * Save paymentType.
+     * @param TransactionTypes $paymentType paymentType paymentType
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save(TransactionTypes $label): void
+    public function save(TransactionTypes $paymentType): void
     {
-        $this->transactionTypesRepository->save($label);
+        $this->transactionTypesRepository->save($paymentType);
     }
 
     /**
-     * Delete label.
+     * Delete paymentType.
      *
-     * @param \App\Entity\TransactionTypes $label TransactionTypes entity
+     * @param \App\Entity\TransactionTypes $paymentType TransactionTypes entity
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function delete(TransactionTypes $label): void
+    public function delete(TransactionTypes $paymentType): void
     {
-        $this->transactionTypesRepository->delete($label);
+        $this->transactionTypesRepository->delete($paymentType);
     }
 
     /**
-     * Find label by Id.
+     * Find paymentType by Id.
      *
      * @param int $id Wallet Id
      *

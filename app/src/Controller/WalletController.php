@@ -11,8 +11,6 @@ use App\Form\WalletType;
 use App\Repository\WalletRepository;
 use App\Service\WalletService;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -60,7 +58,7 @@ class WalletController extends AbstractController
      *
      * )
      */
-    public function index(Request $request, WalletRepository $walletRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
         $form = $this->createForm(WalletDatesType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
@@ -151,7 +149,7 @@ class WalletController extends AbstractController
      *     name="wallet_create",
      * )
      */
-    public function create(Request $request, WalletRepository $walletRepository): Response
+    public function create(Request $request): Response
     {
         $wallet = new Wallet();
         $form = $this->createForm(WalletType::class, $wallet);

@@ -7,13 +7,8 @@ namespace App\Controller;
 
 use App\Form\AccountType;
 use App\Entity\User;
-//use App\Repository\AdminRepository;
-use App\Repository\AdminRepository;
-use App\Repository\UserRepository;
 use App\Service\AdminService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,10 +75,6 @@ class AdminController extends AbstractController
      *     name="admin_show",
      *     requirements={"id": "[1-9]\d*"},
      * )
-     * @IsGranted(
-     *     "VIEW",
-     *     subject="admin",
-     * )
      */
     public function show(User $user): Response
     {
@@ -97,7 +88,6 @@ class AdminController extends AbstractController
      * Edit action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\UserRepository            $userRepository Account repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -110,13 +100,8 @@ class AdminController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="user_edit",
      * )
-     *
-     * @IsGranted(
-     *     "EDIT",
-     *     subject="user",
-     *     )
      */
-    public function edit(Request $request, UserRepository $userRepository, User $user): Response
+    public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(AccountType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -138,48 +123,4 @@ class AdminController extends AbstractController
         );
     }
 
-    /**
-     * Delete action.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request    HTTP request
-     * @param \App\Entity\Account                       $admin      Account entity
-     * @param \App\Repository\AdminRepository           $repository Account repository
-     *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     *
-     * @Route(
-     *     "/{id}/admin_delete",
-     *     methods={"GET", "DELETE"},
-     *     requirements={"id": "[1-9]\d*"},
-     *     name="admin_delete",
-     * )
-     *
-     */
-    public function delete(Request $request, User $user, AdminRepository $repository): Response
-    {
-        $form = $this->createForm(FormType::class, $user, ['method' => 'DELETE']);
-        $form->handleRequest($request);
-
-        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
-            $form->submit($request->request->get($form->getName()));
-        }
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $repository->delete($user);
-            $this->addFlash('success', 'message_deleted_successfully');
-
-            return $this->redirectToRoute('show_users');
-        }
-
-        return $this->render(
-            'admin/delete.html.twig',
-            [
-                'form' => $form->createView(),
-                'user' => $user,
-            ]
-        );
-    }
 }

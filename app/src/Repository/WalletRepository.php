@@ -45,17 +45,6 @@ class WalletRepository extends ServiceEntityRepository
         parent::__construct($registry, Wallet::class);
     }
 
-//    /**
-//     * Query all records.
-//     *
-//     * @return \Doctrine\ORM\QueryBuilder Query builder
-//     */
-//    public function queryAll(): QueryBuilder
-//    {
-//        return $this->getOrCreateQueryBuilder()
-//            ->orderBy('wallet.createdAt', 'DESC');
-//    }
-
     /**
      * Query all records.
      *

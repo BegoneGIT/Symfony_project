@@ -14,37 +14,40 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PaymentTypesRepository extends ServiceEntityRepository
 {
+    /**
+     * PaymentTypesRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PaymentTypes::class);
     }
 
-    // /**
-    //  * @return PaymentTypes[] Returns an array of PaymentTypes objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Save paymentType.
+     *
+     * @param \App\Entity\PaymentTypes $paymentType PaymentTypes entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(PaymentTypes $paymentType): void
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->_em->persist($paymentType);
+        $this->_em->flush($paymentType);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?PaymentTypes
+    /**
+     * Delete paymentType.
+     *
+     * @param \App\Entity\PaymentTypes $paymentType PaymentTypes entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(PaymentTypes $paymentType): void
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->_em->remove($paymentType);
+        $this->_em->flush($paymentType);
     }
-    */
 }

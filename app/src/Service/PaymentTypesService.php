@@ -14,7 +14,14 @@ use App\Repository\PaymentTypesRepository;
 class PaymentTypesService
 {
     /**
+     * @var PaymentTypesRepository
+     */
+    private $paymentTypesRepository;
+
+    /**
      * PaymentTypes constructor.
+     *
+     * @param PaymentTypesRepository $paymentTypesRepository
      */
     public function __construct(PaymentTypesRepository $paymentTypesRepository)
     {
@@ -22,32 +29,33 @@ class PaymentTypesService
     }
 
     /**
-     * Save label.
-     * @param PaymentTypes $label label label
+     * Save paymentType.
+     *
+     * @param PaymentTypes $paymentType paymentType paymentType
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save(PaymentTypes $label): void
+    public function save(PaymentTypes $paymentType): void
     {
-        $this->paymentTypesRepository->save($label);
+        $this->paymentTypesRepository->save($paymentType);
     }
 
     /**
-     * Delete label.
+     * Delete paymentType.
      *
-     * @param \App\Entity\PaymentTypes $label PaymentTypes entity
+     * @param \App\Entity\PaymentTypes $paymentType PaymentTypes entity
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function delete(PaymentTypes $label): void
+    public function delete(PaymentTypes $paymentType): void
     {
-        $this->paymentTypesRepository->delete($label);
+        $this->paymentTypesRepository->delete($paymentType);
     }
 
     /**
-     * Find label by Id.
+     * Find paymentType by Id.
      *
      * @param int $id paymentType Id
      *
