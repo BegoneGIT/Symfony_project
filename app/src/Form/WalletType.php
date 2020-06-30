@@ -14,12 +14,28 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class WalletType.
  */
 class WalletType extends AbstractType
 {
+    /**
+     *  Translator.
+     *
+     * @var Symfony\Contracts\Translation\TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * WalletType constructor.
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Builds the form.
      *
@@ -39,7 +55,7 @@ class WalletType extends AbstractType
             [
                 'class' => Label::class,
                 'choice_label' => function ($label) {
-                        return $label->getName();
+                    return $label->getName();
                 },
                 'label' => 'label_category',
                 'placeholder' => 'label_none',
@@ -53,7 +69,7 @@ class WalletType extends AbstractType
             [
                 'class' => PaymentTypes::class,
                 'choice_label' => function ($payment) {
-                    return $payment->getCode();
+                    return $this->translator->trans($payment->getCode());
                 },
                 'label' => 'label_payment',
                 'placeholder' => 'label_payment_type',
@@ -69,7 +85,7 @@ class WalletType extends AbstractType
             [
                 'class' => TransactionTypes::class,
                 'choice_label' => function ($transaction) {
-                    return $transaction->getCode();
+                    return $this->translator->trans($transaction->getCode());
                 },
                 'label' => 'label_transaction',
                 'placeholder' => 'label_transaction_type',

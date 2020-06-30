@@ -111,9 +111,13 @@
             <source>label_paymentType</source>
             <target>Karta czy gotówka</target>
         </trans-unit>
+        <trans-unit id="label_payment">
+            <source>label_payment</source>
+            <target>Karta czy gotówka</target>
+        </trans-unit>
         <trans-unit id="label_transaction">
             <source>label_transaction</source>
-            <target>Wydatek czy przychód</target>
+            <target>Wydatek czy przychód?</target>
         </trans-unit>
         <trans-unit id="label_label">
             <source>label_label</source>
