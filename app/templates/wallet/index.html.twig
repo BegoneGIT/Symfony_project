@@ -56,7 +56,7 @@
          <tbody>
          {% for wallet in pagination.items %}
              <tr>
-                 <td>{{ wallet.createdAt|date("d/m/Y") }}</td>
+                 <td>{{ wallet.createdAt|format_date('short') }}</td>
                  <td>
                      <a href="{{ url('wallet_index', {'filters' : {'paymentType' : wallet.paymentType.id}}) }}" title="{{ wallet.paymentType.code|trans }}">{{ wallet.paymentType.code|trans }}
                  </td>

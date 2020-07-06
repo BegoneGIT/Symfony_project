@@ -9,7 +9,7 @@
     {% if wallet is defined and wallet|length %}
         <dl class="dl-horizontal">
             <dt>{{ 'label_created_at'|trans }}</dt>
-            <dd>{{ wallet.createdAt|date("d/m/Y") }}</dd>
+            <dd>{{ wallet.createdAt|format_date('short') }}</dd>
             <dt>{{ 'label_amount'|trans }}</dt>
             <dd>{{ wallet.amount }}</dd>
             <dt>{{ 'label_paymentType'|trans }}</dt>
